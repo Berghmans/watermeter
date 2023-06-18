@@ -1,0 +1,71 @@
+---
+# AZ Delivery ESP32
+# TCRT5000 sensor
+# Wiring:
+#   - TCRT5000 A0 <-> ESP32 PIN 33
+#   - TCRT5000 D0 <-> ESP32 PIN 32
+#   - TCRT5000 GND <-> ESP32 PIN GND
+#   - TCRT5000 VCC <-> ESP32 PIN 3v3
+
+substitutions:
+  devicename: "watermeter"
+  ir_digital_pin: GPIO32 # connect digital output from IR sensor to PIN 32
+  ir_analog_pin: GPIO33 # connect analog output from IR sensor to PIN 33
+
+esphome:
+  name: ${devicename}
+
+esp32:
+  board: nodemcu-32s
+
+web_server:
+  port: 80
+
+time:
+  - platform: homeassistant
+    id: my_time
+
+wifi:
+  ap:
+    ssid: ${devicename}
+
+captive_portal:
+
+logger:
+
+ota:
+
+dashboard_import:
+  package_import_url: github://Berghmans/watermeter/watermeter.yaml@main
+  import_full_config: true
+
+sensor:
+  - platform: pulse_meter
+    id: pulse_meter_water
+    pin: ${ir_digital_pin}
+    unit_of_measurement: "L/min"
+    icon: "mdi:water"
+    name: "Water Flow Rate"
+    internal_filter: 150ms
+    internal_filter_mode: PULSE
+    accuracy_decimals: 3
+    timeout: 30s
+    total:
+      name: "Water Usage"
+      unit_of_measurement: "m³"
+      icon: "mdi:water"
+      device_class: water
+      state_class: total_increasing
+      accuracy_decimals: 3
+      filters:
+        - multiply: 0.001
+
+api:
+  services:
+    - service: set_pulse_total
+      variables:
+        new_pulse_total: float
+      then:
+        - pulse_meter.set_total_pulses:
+            id: pulse_meter_water
+            value: !lambda "return new_pulse_total * 1000.0;"
