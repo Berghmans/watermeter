@@ -62,6 +62,11 @@ sensor:
       accuracy_decimals: 3
       filters:
         - multiply: 0.001
+  # Optional sensor for measuring the analog value of the IR sensor
+  # - platform: adc
+  #   pin: ${ir_analog_pin}
+  #   name: "Infrared measurement"
+  #   update_interval: 500ms
 
 api:
   services:
