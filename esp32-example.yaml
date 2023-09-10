@@ -1,0 +1,10 @@
+---
+substitutions:
+  devicename: "watermeter"
+
+packages:
+  berghmans.watermeter:
+    url: https://github.com/Berghmans/watermeter
+    ref: main
+    file: watermeter.yaml
+    refresh: 1d
