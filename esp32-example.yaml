@@ -1,4 +1,7 @@
 ---
+# Max water: 2,5 m³/hour = ~41.66 liter / minute = ~0.7 liter / second
+# -> 1.44 second per liter -> fastest time between pulses is 1.44 seconds
+
 substitutions:
   devicename: "watermeter"
 

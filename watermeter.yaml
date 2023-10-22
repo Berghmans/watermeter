@@ -11,6 +11,7 @@ substitutions:
   devicename: "watermeter"
   ir_digital_pin: GPIO32 # connect digital output from IR sensor to PIN 32
   ir_analog_pin: GPIO33 # connect analog output from IR sensor to PIN 33
+  pulse_filter: 750ms
 
 esphome:
   name: ${devicename}
@@ -45,7 +46,7 @@ sensor:
     unit_of_measurement: "L/min"
     icon: "mdi:water"
     name: "Water Flow Rate"
-    internal_filter: 150ms
+    internal_filter: ${pulse_filter}
     internal_filter_mode: PULSE
     accuracy_decimals: 3
     timeout: 30s
