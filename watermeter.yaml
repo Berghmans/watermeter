@@ -39,6 +39,14 @@ logger:
 
 ota:
 
+external_components:
+  - source:
+      type: git
+      url: https://github.com/Berghmans/watermeter
+      ref: main
+    components: [ pulse_meter ]
+    refresh: 1s
+
 sensor:
   - platform: pulse_meter
     id: pulse_meter_water
