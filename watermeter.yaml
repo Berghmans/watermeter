@@ -9,12 +9,14 @@
 
 substitutions:
   devicename: "watermeter"
+  friendly_name: "Watermeter"
   ir_digital_pin: GPIO32 # connect digital output from IR sensor to PIN 32
   ir_analog_pin: GPIO33 # connect analog output from IR sensor to PIN 33
   pulse_filter: 750ms
 
 esphome:
   name: ${devicename}
+  friendly_name: ${friendly_name}
   project:
     name: berghmans.watermeter
     version: "1.0"
